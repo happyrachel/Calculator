@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算器</title>
+	<style>
+		div{
+			width: 300px;
+			background-color: pink;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+		.shurukuang{
+			text-align: right;
+			width: 298px;
+			height: 50px;
+			border: 1px solid #f59ab9;
+			font-size: 30px;
+			opacity: 0.7;
+		}
+		.m-left{
+			width: 250px;
+			float: left;
+		}
+		.num,.result,.suanfa,.qingkong{
+			width: 50px;
+			height: 50px;
+			font-size: 25px;
+			color:#c1134e;
+		}
+		aside{
+			float: left;
+			width: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<input class="shurukuang" type="text" value="">
+		<br>
+		<br>
+		<div class="m-left">
+			<input class= "num" type="button" value="0">
+			<input class= "num" type="button" value="1">
+			<input class= "num" type="button" value="2">
+			<input class= "num" type="button" value="3">
+			<br>
+			<br>
+			<input class= "num" type="button" value="4">
+			<input class= "num" type="button" value="5">
+			<input class= "num" type="button" value="6">
+			<input class= "num" type="button" value="7">
+			<br>
+			<br>
+			<input class= "num" type="button" value="8">
+			<input class= "num" type="button" value="9">
+			<input class= "num" type="button" value=".">
+			<input class="result" type="button" value="=">
+			<br>
+			<br>
+			<input class="qingkong" type="button" value="AC">
+		</div>
+		<aside>
+			<input class="suanfa" type="button" value="+">
+			<br>
+			<br>
+			<input class="suanfa" type="button" value="-">
+			<br>
+			<br>
+			<input class="suanfa" type="button" value="*">
+			<br>
+			<br>
+			<input class="suanfa" type="button" value="/">
+		</aside>
+	</div>
+	<script src="js/jquery-3.0.0.js"></script>
+	<script>
+		var num1="" //定义num1为空
+		var num2=""//定义num2为空
+		var suanfa = ""//定义初次算法为空
+		var result=false
+		function fun(a,b,c){
+			switch(a){
+				case "+":$(":text").val(Number(b)+Number(c));break;
+				case "-":$(":text").val(Number(b)-Number(c));break;
+				case "*":$(":text").val(Number(b)*Number(c));break;
+				case "/":$(":text").val(Number(b)/Number(c));break;
+				return $(":text").val()
+			};
+		}
+		$(".num").click(function(){  //点击数字
+			var num = $(this).val()  //获取点击的数字			
+			if (suanfa=="") {  //如果没有点击加减乘除
+				if (result) {
+					num1=""
+					num2=""
+					result=false
+				} else{};
+				num1=num1+num  //输出num1
+				console.log(typeof(num1))
+				$(":text").val(num1)
+			} else{
+				num2=num2+num
+				$(":text").val(num1+suanfa+num2)
+			};
+		})
+		$(".suanfa").click(function(){
+			 if (num2) {
+			fun(suanfa,num1,num2)
+			num1=$(":text").val()
+			num2=""
+			} else{};
+			suanfa=$(this).val()
+			$(":text").val(num1+suanfa)
+		})
+		$(".result").click(function(){
+			result=true;
+			fun(suanfa,num1,num2)
+			num1=$(":text").val()
+			num2=""
+			suanfa=""
+		})
+		$(".qingkong").click(function(){
+			$(":text").val("");
+			num1=""
+			num2=""
+		})
+	</script>
+</body>
+</html>
